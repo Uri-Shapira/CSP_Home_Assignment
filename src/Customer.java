@@ -144,11 +144,18 @@ public class Customer extends User{
             log.writeToLogFile(errorMessage);
             System.err.println(errorMessage);
         }
+        else if(shoppingCart.getShoppingCartItems() == null || shoppingCart.getShoppingCartItems().size() == 0){
+            String errorMessage = "Failed to execute purchase. Shopping cart is empty.";
+            log.writeToLogFile(errorMessage);
+            System.err.println(errorMessage);
+        }
         else {
             // makePayment();
             Store store = shoppingCart.getStore();
             log.writeToLogFile("Customer " + userId + " has completed his order.");
             store.processUserOrder(userId, shoppingCart);
+            // Empty shopping cart after purchase
+            shoppingCart = new ShoppingCart(store);
         }
     }
 
